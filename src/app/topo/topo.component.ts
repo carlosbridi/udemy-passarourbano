@@ -20,7 +20,6 @@ import 'rxjs/add/observable/of';
 export class TopoComponent implements OnInit {
 
   public ofertas: Observable<Oferta[]>;
-  public ofertas2: Oferta[]; //Utilizado para dentro do ListGroup
   public subjectPesquisa: Subject<string> = new Subject<string>();
 
   constructor(private ofertaService: OfertasService) { }
@@ -39,12 +38,6 @@ export class TopoComponent implements OnInit {
       console.log(erro);
       return Observable.of<Oferta[]>([]);
     });
-
-    this.ofertas.subscribe((ofertas: Oferta[]) => {
-      console.log(ofertas);
-      this.ofertas2 = ofertas;
-      console.log(this.ofertas2);
-    });
   }
 
   pesquisa(termoDaBusca: string): void {
@@ -55,6 +48,10 @@ export class TopoComponent implements OnInit {
     //                       () => console.log('Fluxo de eventos finalizad'));
 
     this.subjectPesquisa.next(termoDaBusca);
+  }
+
+  public limpaPesquisa(): void {
+    this.subjectPesquisa.next('');
   }
 
 }
